@@ -5,6 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dr. Plomero — Emergencias de Plomería y Electricidad</title>
 <meta name="description" content="Atención de emergencias 24/7 en plomería y electricidad. Destapes, cortos circuitos y fugas en Cuernavaca y Jiutepec.">
+
+<!-- Open Graph: para que se vea bien si se comparte en redes -->
+<meta property="og:title" content="Dr. Plomero — Emergencias de Plomería y Electricidad 24/7">
+<meta property="og:description" content="Destapes, fugas masivas y fallas eléctricas graves. Atención inmediata en Cuernavaca y Jiutepec.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_MX">
+
+<!-- Datos estructurados: ayuda a Google a entender que es un negocio local real -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Plumber",
+  "name": "Dr. Plomero",
+  "telephone": "+527701859573",
+  "email": "drplomerodavidmendoza@proton.me",
+  "areaServed": ["Cuernavaca", "Jiutepec"],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Cuernavaca",
+    "addressRegion": "Morelos",
+    "addressCountry": "MX"
+  },
+  "openingHours": "Mo-Su 00:00-23:59",
+  "priceRange": "$$"
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -91,6 +117,19 @@
   .btn.danger{ background:var(--safety); color:white; }
   .btn.danger:hover{ background:#cc2e26; transform: translateY(-2px); }
 
+  .visible-contact{
+    margin-top:22px; text-align:center; font-family:'IBM Plex Mono', monospace;
+  }
+  .visible-contact .phone-text{
+    font-size:1.3rem; font-weight:600; color:var(--paper);
+    letter-spacing:.02em;
+  }
+  .visible-contact .phone-text a{ color:var(--ok-green); }
+  .visible-contact .email-text{
+    margin-top:6px; font-size:.8rem; color:var(--paper-dim);
+  }
+  .visible-contact .email-text a{ color:var(--paper-dim); text-decoration:underline; text-underline-offset:3px; }
+
   section{ padding:80px 20px; max-width:1100px; margin:0 auto; }
   .section-head{ text-align:center; margin-bottom:54px; }
   .section-title{
@@ -136,6 +175,15 @@
   .float-wa svg { width: 35px; height: 35px; }
 
 </style>
+
+<!-- Google tag (gtag.js) — etiqueta base, activada -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-10935304204"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-10935304204');
+</script>
 </head>
 <body>
 
@@ -160,6 +208,11 @@
       LLAMADA DIRECTA
     </a>
   </div>
+
+  <div class="visible-contact">
+    <div class="phone-text"><a href="tel:+527701859573" id="phoneTextLink">770 185 9573</a></div>
+    <div class="email-text"><a href="mailto:drplomerodavidmendoza@proton.me">drplomerodavidmendoza@proton.me</a></div>
+  </div>
 </header>
 
 <section id="urgencias">
@@ -176,7 +229,7 @@
         <li>Fugas de agua masivas</li>
         <li>Inundaciones por ruptura</li>
       </ul>
-      <a href="#" class="card-btn wa-link">Solicitar Técnico Ahora</a>
+      <a href="#" class="card-btn wa-link" data-msg="Tengo una EMERGENCIA de drenaje/fuga de agua.">Solicitar Técnico Ahora</a>
     </div>
 
     <div class="service-card">
@@ -187,7 +240,7 @@
         <li>Chispazos o cables quemados</li>
         <li>Falla en centro de carga principal</li>
       </ul>
-      <a href="#" class="card-btn wa-link">Solicitar Técnico Ahora</a>
+      <a href="#" class="card-btn wa-link" data-msg="Tengo una EMERGENCIA eléctrica.">Solicitar Técnico Ahora</a>
     </div>
   </div>
 
@@ -203,21 +256,42 @@
 </a>
 
 <script>
-  const WHATSAPP_NUMBER = "527701859573"; 
+  const WHATSAPP_NUMBER = "527701859573";
   const PHONE_NUMBER = "+527701859573";
 
+  // ✅ Etiqueta base de Google Ads ya activada (AW-10935304204).
+  // ⚠️ PASO A ACTIVAR: falta la etiqueta de conversión ESPECÍFICA (con el
+  // formato "AW-10935304204/AbCdEfGhIjKlMnOpQrSt"), que se consigue dentro
+  // de tu acción de conversión → "Configuración de la etiqueta" →
+  // "Instalar usted mismo". Sin esto, los clics se registran pero no
+  // cuentan como conversión medible dentro de Google Ads.
+  const GADS_CONVERSION_ID = ""; // ej: "AW-10935304204/AbCdEfGhIjKlMnOpQrSt"
+
+  function trackConversion(label){
+    if (typeof gtag === 'function' && GADS_CONVERSION_ID) {
+      gtag('event', 'conversion', { send_to: GADS_CONVERSION_ID, event_label: label });
+    }
+    console.log('Clic de contacto registrado:', label);
+  }
+
   if (WHATSAPP_NUMBER) {
-    const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Necesito asistencia técnica URGENTE.')}`;
-    document.getElementById('btnWhatsapp').href = waLink;
-    document.getElementById('floatWa').href = waLink;
-    
-    // Aplicar link a los botones de las tarjetas
+    const defaultMsg = 'Necesito asistencia técnica URGENTE.';
+    const waLinkFor = (msg) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg || defaultMsg)}`;
+
+    document.getElementById('btnWhatsapp').href = waLinkFor(defaultMsg);
+    document.getElementById('floatWa').href = waLinkFor(defaultMsg);
+
     document.querySelectorAll('.wa-link').forEach(btn => {
-        btn.href = waLink;
+      btn.href = waLinkFor(btn.dataset.msg);
+      btn.addEventListener('click', () => trackConversion('whatsapp_tarjeta'));
     });
+    document.getElementById('btnWhatsapp').addEventListener('click', () => trackConversion('whatsapp_hero'));
+    document.getElementById('floatWa').addEventListener('click', () => trackConversion('whatsapp_flotante'));
   }
   if (PHONE_NUMBER) {
     document.getElementById('btnLlamar').href = `tel:${PHONE_NUMBER}`;
+    document.getElementById('btnLlamar').addEventListener('click', () => trackConversion('llamada_hero'));
+    document.getElementById('phoneTextLink').addEventListener('click', () => trackConversion('llamada_texto_visible'));
   }
 </script>
 </body>
