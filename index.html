@@ -265,11 +265,16 @@
   // de tu acción de conversión → "Configuración de la etiqueta" →
   // "Instalar usted mismo". Sin esto, los clics se registran pero no
   // cuentan como conversión medible dentro de Google Ads.
-  const GADS_CONVERSION_ID = ""; // ej: "AW-10935304204/AbCdEfGhIjKlMnOpQrSt"
+  const GADS_CONVERSION_ID = "AW-10935304204/73_nCIjNmtIcEIyArt4o";
 
   function trackConversion(label){
     if (typeof gtag === 'function' && GADS_CONVERSION_ID) {
-      gtag('event', 'conversion', { send_to: GADS_CONVERSION_ID, event_label: label });
+      gtag('event', 'conversion', {
+        send_to: GADS_CONVERSION_ID,
+        value: 1.0,
+        currency: 'MXN',
+        event_label: label
+      });
     }
     console.log('Clic de contacto registrado:', label);
   }
