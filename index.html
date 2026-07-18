@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dr. Plomero — Plomería, Mantenimiento y Electricidad</title>
-<meta name="description" content="Servicios profesionales de plomería, mantenimiento y electricidad con reportes técnicos y facturación formal. Cuernavaca y alrededores.">
+<title>Dr. Plomero — Emergencias de Plomería y Electricidad</title>
+<meta name="description" content="Atención de emergencias 24/7 en plomería y electricidad. Destapes, cortos circuitos y fugas en Cuernavaca y Jiutepec.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --blueprint: #0e2a47;
@@ -15,9 +15,9 @@
     --paper: #eef4fa;
     --paper-dim: #a9c2d8;
     --steel: #5d7f9c;
-    --safety: #e8622c;
-    --safety-bright: #ff7a42;
-    --ok-green: #4caf6a;
+    --safety: #ff3b30; /* Cambiado a rojo emergencia */
+    --safety-bright: #ff6b22;
+    --ok-green: #25d366; /* Verde WhatsApp */
     --border: rgba(180, 210, 235, .18);
   }
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -38,417 +38,187 @@
   nav.topnav{
     position:sticky; top:0; z-index:100;
     display:flex; align-items:center; justify-content:space-between;
-    padding:16px 30px;
-    background:rgba(8,28,48,.92);
-    backdrop-filter:blur(6px);
-    border-bottom:1px solid var(--border);
+    padding:12px 20px;
+    background:rgba(8,28,48,.95);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--safety); /* Línea de emergencia superior */
   }
   nav.topnav .brand{
     font-family:'Big Shoulders Display', sans-serif; font-weight:800;
-    font-size:1.3rem; letter-spacing:.02em; color:var(--paper);
+    font-size:1.5rem; letter-spacing:.02em; color:var(--paper);
   }
   nav.topnav .brand span{ color:var(--safety); }
-  nav.topnav ul{ list-style:none; display:flex; gap:26px; }
-  nav.topnav a{
-    font-size:.8rem; letter-spacing:.04em; color:var(--paper-dim);
-    text-transform:uppercase; transition:.2s;
-  }
-  nav.topnav a:hover{ color:var(--safety-bright); }
-  .nav-toggle{ display:none; background:none; border:1px solid var(--border); color:var(--paper); padding:6px 10px; }
-  @media (max-width:720px){
-    nav.topnav ul{ display:none; }
-    nav.topnav.open ul{
-      display:flex; flex-direction:column; position:absolute; top:100%; left:0; right:0;
-      background:var(--blueprint-deep); padding:20px; gap:16px; border-bottom:1px solid var(--border);
-    }
-    .nav-toggle{ display:block; }
+  
+  .emergency-banner {
+    background: var(--safety);
+    color: white;
+    text-align: center;
+    padding: 6px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
   }
 
   header.hero{
-    min-height:88vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
-    text-align:center; padding:60px 20px; position:relative;
+    min-height:80vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:40px 20px; position:relative;
   }
   .ticket-tag{
-    font-family:'IBM Plex Mono', monospace; font-size:.72rem; letter-spacing:.2em;
-    color:var(--safety-bright); border:1px solid var(--safety); padding:5px 16px;
-    text-transform:uppercase; margin-bottom:26px; background:rgba(232,98,44,.06);
+    font-family:'IBM Plex Mono', monospace; font-size:.85rem; font-weight:bold; letter-spacing:.1em;
+    color:white; border:2px solid var(--safety); padding:8px 20px;
+    text-transform:uppercase; margin-bottom:26px; background:var(--safety); border-radius: 4px;
   }
   .brand-title{
     font-family:'Big Shoulders Display', sans-serif; font-weight:800;
-    font-size:clamp(2.6rem, 9vw, 5.6rem); line-height:.95; letter-spacing:.01em;
+    font-size:clamp(2.2rem, 8vw, 4.5rem); line-height:1; letter-spacing:.01em;
     color:var(--paper);
   }
   .brand-title span{ color:var(--safety); }
   .hero-tagline{
-    margin-top:20px; max-width:560px; color:var(--paper-dim); font-size:clamp(1rem, 2.2vw, 1.2rem);
+    margin-top:20px; max-width:600px; color:var(--paper); font-size:clamp(1.1rem, 2.5vw, 1.4rem); font-weight: 500;
   }
-  .service-badges{ display:flex; gap:14px; margin-top:30px; flex-wrap:wrap; justify-content:center; }
-  .badge{
-    font-family:'IBM Plex Mono', monospace; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase;
-    border:1px solid var(--border); padding:7px 14px; color:var(--paper-dim);
-  }
-  .cta-row{ display:flex; gap:14px; margin-top:38px; flex-wrap:wrap; justify-content:center; }
+  .cta-row{ display:flex; flex-direction: column; gap:16px; margin-top:38px; width: 100%; max-width: 400px; }
+  
   .btn{
-    font-family:'IBM Plex Sans', sans-serif; font-weight:600;
-    padding:14px 26px; border-radius:3px; font-size:.9rem; letter-spacing:.01em;
-    display:inline-flex; align-items:center; gap:8px; transition:.2s;
+    font-family:'IBM Plex Sans', sans-serif; font-weight:700;
+    padding:18px 26px; border-radius:6px; font-size:1.1rem; letter-spacing:.02em;
+    display:flex; justify-content:center; align-items:center; gap:12px; transition:.2s;
+    text-transform: uppercase;
   }
-  .btn.primary{ background:var(--safety); color:#081c30; }
-  .btn.primary:hover{ background:var(--safety-bright); }
-  .btn.outline{ border:1px solid var(--paper-dim); color:var(--paper); }
-  .btn.outline:hover{ border-color:var(--paper); background:rgba(255,255,255,.04); }
+  .btn.primary{ background:var(--ok-green); color:white; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); }
+  .btn.primary:hover{ background:#1da851; transform: translateY(-2px); }
+  .btn.danger{ background:var(--safety); color:white; }
+  .btn.danger:hover{ background:#cc2e26; transform: translateY(-2px); }
 
-  section{ padding:90px 20px; max-width:1100px; margin:0 auto; }
+  section{ padding:80px 20px; max-width:1100px; margin:0 auto; }
   .section-head{ text-align:center; margin-bottom:54px; }
-  .eyebrow{
-    font-family:'IBM Plex Mono', monospace; font-size:.72rem; letter-spacing:.22em;
-    text-transform:uppercase; color:var(--safety-bright); display:block; margin-bottom:12px;
-  }
   .section-title{
     font-family:'Big Shoulders Display', sans-serif; font-weight:800;
-    font-size:clamp(1.8rem, 4.5vw, 2.6rem); color:var(--paper);
+    font-size:clamp(2rem, 5vw, 3rem); color:var(--paper);
   }
-  .section-sub{ color:var(--paper-dim); max-width:520px; margin:14px auto 0; font-size:.95rem; }
 
-  /* Servicios como hojas de orden de trabajo */
-  .services-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:26px; }
+  /* Grid de Urgencias */
+  .services-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:26px; }
   .service-card{
-    background:rgba(255,255,255,.03); border:1px solid var(--border); padding:28px 24px;
-    position:relative; border-top:3px solid var(--safety);
+    background:rgba(255,255,255,.05); border:1px solid var(--border); padding:30px 24px;
+    position:relative; border-top:4px solid var(--safety); transition: transform 0.2s;
   }
-  .service-card .ot-tag{
-    font-family:'IBM Plex Mono', monospace; font-size:.68rem; letter-spacing:.1em;
-    color:var(--paper-dim); margin-bottom:16px; display:block;
-  }
-  .service-card .icon{ width:38px; height:38px; margin-bottom:16px; color:var(--safety-bright); }
+  .service-card:hover { transform: translateY(-5px); border-color: var(--safety); }
   .service-card h3{
-    font-family:'Big Shoulders Display', sans-serif; font-weight:800; font-size:1.4rem;
-    margin-bottom:10px; color:var(--paper);
+    font-family:'Big Shoulders Display', sans-serif; font-weight:800; font-size:1.8rem;
+    margin-bottom:15px; color:var(--paper); text-transform: uppercase;
   }
-  .service-card p{ color:var(--paper-dim); font-size:.9rem; margin-bottom:16px; }
-  .service-card ul{ list-style:none; display:flex; flex-direction:column; gap:8px; }
-  .service-card li{ font-size:.85rem; color:var(--paper); display:flex; gap:8px; align-items:baseline; }
-  .service-card li::before{ content:"—"; color:var(--safety); flex-shrink:0; }
+  .service-card ul{ list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom: 25px; }
+  .service-card li{ font-size:1rem; color:var(--paper); display:flex; gap:10px; align-items:center; }
+  .service-card li::before{ content:"⚠️"; font-size: 1.2rem; flex-shrink:0; }
+  
+  .card-btn {
+      display: block; width: 100%; text-align: center; background: rgba(255,59,48,0.1); 
+      color: var(--safety); border: 1px solid var(--safety); padding: 12px; font-weight: bold; border-radius: 4px;
+  }
 
-  /* Por qué Dr. Plomero */
-  .trust-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:30px; }
-  .trust-item{ display:flex; gap:16px; align-items:flex-start; }
-  .trust-item .num{
-    font-family:'IBM Plex Mono', monospace; font-size:.85rem; color:var(--safety-bright);
-    border:1px solid var(--safety); border-radius:50%; width:34px; height:34px;
-    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  /* Trust Section Minimalista */
+  .trust-banner {
+      background: var(--blueprint-deep); border: 1px solid var(--border); padding: 40px 20px;
+      text-align: center; margin: 40px auto; border-radius: 8px;
   }
-  .trust-item h4{ font-size:1rem; margin-bottom:6px; color:var(--paper); }
-  .trust-item p{ font-size:.85rem; color:var(--paper-dim); }
+  .trust-banner h3 { font-family:'Big Shoulders Display'; font-size: 2rem; color: var(--safety); margin-bottom: 15px;}
+  .trust-banner p { font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
 
-  /* Cobertura */
-  .coverage-wrap{ display:flex; align-items:center; gap:50px; flex-wrap:wrap; justify-content:center; }
-  .coverage-map{ width:220px; height:220px; position:relative; flex-shrink:0; }
-  .coverage-map .ring{
-    position:absolute; border:1px solid var(--safety); border-radius:50%; opacity:.35;
+  /* Floating WhatsApp */
+  .float-wa {
+      position: fixed; bottom: 30px; right: 30px; background: var(--ok-green); color: white;
+      width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1000; transition: transform 0.2s;
   }
-  .coverage-map .ring.r1{ inset:0; }
-  .coverage-map .ring.r2{ inset:28px; }
-  .coverage-map .ring.r3{ inset:56px; }
-  .coverage-map .pin{
-    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-    width:14px; height:14px; background:var(--safety); border-radius:50% 50% 50% 0;
-    rotate:-45deg; box-shadow:0 0 14px rgba(232,98,44,.6);
-  }
-  .coverage-text{ max-width:380px; }
-  .coverage-text h3{ font-family:'Big Shoulders Display', sans-serif; font-weight:800; font-size:1.5rem; margin-bottom:12px; }
-  .coverage-text p{ color:var(--paper-dim); font-size:.9rem; }
+  .float-wa:hover { transform: scale(1.1); }
+  .float-wa svg { width: 35px; height: 35px; }
 
-  /* Contacto */
-  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
-  @media (max-width:760px){ .contact-grid{ grid-template-columns:1fr; } }
-  .contact-options{ display:flex; flex-direction:column; gap:16px; }
-  .contact-option{
-    display:flex; align-items:center; gap:16px; padding:20px; border:1px solid var(--border);
-    background:rgba(255,255,255,.03); transition:.2s;
-  }
-  .contact-option:hover{ border-color:var(--safety); }
-  .contact-option .ico{
-    width:42px; height:42px; border-radius:50%; background:rgba(232,98,44,.12);
-    display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--safety-bright);
-  }
-  .contact-option h4{ font-size:.95rem; color:var(--paper); }
-  .contact-option p{ font-size:.8rem; color:var(--paper-dim); }
-
-  .quote-panel{ background:rgba(255,255,255,.03); border:1px solid var(--border); padding:28px; }
-  .quote-panel h3{ font-family:'Big Shoulders Display', sans-serif; font-weight:800; font-size:1.3rem; margin-bottom:10px; }
-  .quote-panel p{ color:var(--paper-dim); font-size:.85rem; margin-bottom:18px; }
-  .form-embed-wrap{ position:relative; min-height:420px; border:1px solid var(--border); background:var(--blueprint-deep); }
-  .form-embed{ width:100%; height:420px; border:0; display:block; }
-  .form-pending{
-    position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:10px; text-align:center; padding:30px;
-  }
-  .form-pending p{ font-size:.78rem; color:var(--paper-dim); max-width:300px; }
-  .form-pending code{ color:var(--safety-bright); }
-
-  .social-row{ display:flex; gap:14px; justify-content:center; margin-top:22px; }
-  .social-link{
-    width:38px; height:38px; border:1px solid var(--border); border-radius:50%;
-    display:flex; align-items:center; justify-content:center; color:var(--paper-dim); transition:.2s;
-  }
-  .social-link:hover{ color:var(--safety-bright); border-color:var(--safety); }
-
-  footer{ padding:40px 20px 60px; text-align:center; border-top:1px solid var(--border); }
-  footer p{ font-size:.78rem; color:var(--paper-dim); max-width:480px; margin:0 auto; }
-  footer .brand{ font-family:'Big Shoulders Display', sans-serif; font-weight:800; color:var(--paper); margin-bottom:8px; display:block; }
 </style>
 </head>
 <body>
 
+<div class="emergency-banner">Atención inmediata en Cuernavaca y Jiutepec</div>
+
 <nav class="topnav" id="topnav">
   <span class="brand">DR. <span>PLOMERO</span></span>
-  <button class="nav-toggle" id="navToggle">☰</button>
-  <ul>
-    <li><a href="#servicios">Servicios</a></li>
-    <li><a href="#nosotros">Nosotros</a></li>
-    <li><a href="#cobertura">Cobertura</a></li>
-    <li><a href="#contacto">Contacto</a></li>
-  </ul>
 </nav>
 
 <header class="hero">
-  <div class="ticket-tag">Orden de servicio N.° 001 — Disponible</div>
-  <h1 class="brand-title">DR. <span>PLOMERO</span></h1>
-  <p class="hero-tagline">Plomería, mantenimiento y electricidad con diagnóstico claro, reporte por escrito y factura formal. Sin sorpresas en la cuenta.</p>
-
-  <div class="service-badges">
-    <span class="badge">Plomería</span>
-    <span class="badge">Mantenimiento</span>
-    <span class="badge">Electricidad</span>
-  </div>
+  <div class="ticket-tag">UNIDAD DE RESPUESTA DISPONIBLE</div>
+  <h1 class="brand-title">EMERGENCIAS TÉCNICAS <span>24/7</span></h1>
+  <p class="hero-tagline">Destapes, fugas masivas y fallas eléctricas graves. Grupo de expertos listo para llegar a tu ubicación rápido.</p>
 
   <div class="cta-row">
-    <a class="btn primary" href="#" id="btnWhatsapp">WhatsApp directo</a>
-    <a class="btn outline" href="#" id="btnLlamar">Llamar ahora</a>
-    <a class="btn outline" href="#contacto">Solicitar cotización</a>
-  </div>
-
-  <div class="social-row">
-    <a class="social-link" href="https://www.facebook.com/profile.php?id=61572610782451" target="_blank" rel="noopener" aria-label="Facebook de Dr. Plomero">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+    <a class="btn primary" href="#" id="btnWhatsapp">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+      WHATSAPP DE EMERGENCIA
     </a>
-    <a class="social-link" href="https://www.instagram.com/drplomero/" target="_blank" rel="noopener" aria-label="Instagram de Dr. Plomero">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+    <a class="btn danger" href="#" id="btnLlamar">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      LLAMADA DIRECTA
     </a>
   </div>
 </header>
 
-<!-- SERVICIOS -->
-<section id="servicios">
+<section id="urgencias">
   <div class="section-head">
-    <span class="eyebrow">Lo que hacemos</span>
-    <h2 class="section-title">Servicios principales</h2>
-    <p class="section-sub">Cada visita queda documentada: qué se encontró, qué se hizo y qué se recomienda a futuro.</p>
+    <h2 class="section-title">¿QUÉ PROBLEMA TIENES AHORA?</h2>
   </div>
 
   <div class="services-grid">
     <div class="service-card">
-      <span class="ot-tag">OT-001 · PLOMERÍA</span>
-      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 6l4-4 4 4-4 4-4-4z"/><path d="M14 6L4 16l2 2 10-10"/><path d="M6 18l-2 2 2 2 2-2"/></svg>
-      <h3>Plomería</h3>
-      <p>Fugas, destapes, instalación de tuberías, calentadores y sanitarios.</p>
+      <h3>Drenajes y Tuberías</h3>
       <ul>
-        <li>Diagnóstico de fugas visibles y ocultas</li>
-        <li>Destape de drenajes y coladeras</li>
-        <li>Instalación y cambio de calentadores</li>
-        <li>Reparación de llaves, tinacos y cisternas</li>
+        <li>Destape urgente de drenajes obstruidos</li>
+        <li>Desazolve profundo</li>
+        <li>Fugas de agua masivas</li>
+        <li>Inundaciones por ruptura</li>
       </ul>
+      <a href="#" class="card-btn wa-link">Solicitar Técnico Ahora</a>
     </div>
 
     <div class="service-card">
-      <span class="ot-tag">OT-002 · MANTENIMIENTO</span>
-      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9c.14.31.36.6.66.83"/></svg>
-      <h3>Mantenimiento</h3>
-      <p>Revisiones preventivas y correctivas para casas, oficinas y locales.</p>
+      <h3>Emergencia Eléctrica</h3>
       <ul>
-        <li>Mantenimiento preventivo programado</li>
-        <li>Reparaciones generales del hogar</li>
-        <li>Revisión de instalaciones antes de mudanza</li>
-        <li>Reportes fotográficos de cada visita</li>
+        <li>Cortos circuitos activos</li>
+        <li>Apagones totales o parciales</li>
+        <li>Chispazos o cables quemados</li>
+        <li>Falla en centro de carga principal</li>
       </ul>
+      <a href="#" class="card-btn wa-link">Solicitar Técnico Ahora</a>
     </div>
+  </div>
 
-    <div class="service-card">
-      <span class="ot-tag">OT-003 · ELECTRICIDAD</span>
-      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-      <h3>Electricidad</h3>
-      <p>Instalaciones y reparaciones eléctricas con revisión de seguridad incluida.</p>
-      <ul>
-        <li>Diagnóstico de cortos y apagones</li>
-        <li>Instalación de contactos y centros de carga</li>
-        <li>Cambio de instalación antigua</li>
-        <li>Revisión de seguridad eléctrica</li>
-      </ul>
-    </div>
+  <div class="trust-banner">
+    <h3>EQUIPO MULTIDISCIPLINARIO CERTIFICADO</h3>
+    <p>No enviamos a un "todólogo". Enviamos al técnico especializado que requieres. Mantenimiento residencial, comercial e industrial.</p>
   </div>
 </section>
 
-<!-- NOSOTROS -->
-<section id="nosotros">
-  <div class="section-head">
-    <span class="eyebrow">Por qué Dr. Plomero</span>
-    <h2 class="section-title">Trabajo documentado, no adivinado</h2>
-    <p class="section-sub">La misma seriedad con la que se documenta un proyecto de ingeniería, aplicada al servicio en tu casa.</p>
-  </div>
-
-  <div class="trust-grid">
-    <div class="trust-item">
-      <div class="num">1</div>
-      <div>
-        <h4>Diagnóstico antes de cotizar</h4>
-        <p>La visita de diagnóstico tiene un costo de $350 MXN, que se descuenta del presupuesto final si decides realizar el trabajo.</p>
-      </div>
-    </div>
-    <div class="trust-item">
-      <div class="num">2</div>
-      <div>
-        <h4>Reporte técnico por escrito</h4>
-        <p>Cada visita queda registrada: qué se encontró, qué se hizo y qué revisar a futuro.</p>
-      </div>
-    </div>
-    <div class="trust-item">
-      <div class="num">3</div>
-      <div>
-        <h4>Factura y comprobante formal</h4>
-        <p>Todo servicio se documenta con recibo o factura, sin cobros a mitad de trabajo.</p>
-      </div>
-    </div>
-    <div class="trust-item">
-      <div class="num">4</div>
-      <div>
-        <h4>Garantía sobre el trabajo</h4>
-        <p>Si algo no quedó bien, se corrige sin costo adicional dentro del periodo de garantía.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COBERTURA -->
-<section id="cobertura">
-  <div class="coverage-wrap">
-    <div class="coverage-map">
-      <div class="ring r1"></div>
-      <div class="ring r2"></div>
-      <div class="ring r3"></div>
-      <div class="pin"></div>
-    </div>
-    <div class="coverage-text">
-      <span class="eyebrow">Zona de servicio</span>
-      <h3>Cuernavaca, Morelos y alrededores</h3>
-      <p>Atención en Cuernavaca, Morelos, y municipios cercanos. Si no estás seguro si tu zona está cubierta, escribe por WhatsApp y se confirma antes de agendar.</p>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACTO -->
-<section id="contacto">
-  <div class="section-head">
-    <span class="eyebrow">Hablemos</span>
-    <h2 class="section-title">Contacto</h2>
-    <p class="section-sub">Elige la opción que prefieras, o llena el formulario para una cotización sin compromiso.</p>
-  </div>
-
-  <div class="contact-grid">
-    <div class="contact-options">
-      <a class="contact-option" href="#" id="linkWhatsapp">
-        <div class="ico">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-        </div>
-        <div><h4>WhatsApp</h4><p>Respuesta más rápida, ideal para mandar fotos del problema.</p></div>
-      </a>
-
-      <a class="contact-option" href="#" id="linkLlamar">
-        <div class="ico">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-        </div>
-        <div><h4>Llamada telefónica</h4><p>Para explicar el problema directamente y agendar visita.</p></div>
-      </a>
-
-      <a class="contact-option" href="mailto:drplomerodavidmendoza@proton.me">
-        <div class="ico">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-        </div>
-        <div><h4>Correo electrónico</h4><p>drplomerodavidmendoza@proton.me — para cotizaciones detalladas o documentos.</p></div>
-      </a>
-
-      <div class="contact-option" style="cursor:default;">
-        <div class="ico">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-        </div>
-        <div><h4>Formulario de cotización</h4><p>Describe el problema y se responde con un rango de precio estimado.</p></div>
-      </div>
-    </div>
-
-    <div class="quote-panel">
-      <h3>Solicitar cotización</h3>
-      <p>Cuéntanos qué necesitas y en qué zona estás. Se responde el mismo día.</p>
-      <p style="font-size:.78rem; color:var(--safety-bright); border-left:2px solid var(--safety); padding-left:10px; margin-bottom:18px;">
-        La visita de diagnóstico tiene un costo de $350 MXN. Se descuenta del presupuesto final si se realiza el trabajo.
-      </p>
-      <div class="form-embed-wrap" id="formWrap">
-        <iframe class="form-embed" id="quoteForm" src="" title="Formulario de cotización"></iframe>
-        <div class="form-pending" id="formPending">
-          <p>📋 El formulario aún no está conectado.</p>
-          <p>Pega la URL de tu Google Form en la variable <code>FORM_URL</code>, cerca del final del archivo HTML.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <span class="brand">DR. PLOMERO</span>
-  <p>Plomería, mantenimiento y electricidad en Cuernavaca y alrededores. Servicio con diagnóstico, reporte técnico y factura formal.</p>
-  <p style="margin-top:10px;">drplomerodavidmendoza@proton.me</p>
-  <div class="social-row">
-    <a class="social-link" href="https://www.facebook.com/profile.php?id=61572610782451" target="_blank" rel="noopener" aria-label="Facebook de Dr. Plomero">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-    </a>
-    <a class="social-link" href="https://www.instagram.com/drplomero/" target="_blank" rel="noopener" aria-label="Instagram de Dr. Plomero">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-    </a>
-  </div>
-</footer>
+<!-- Botón Flotante -->
+<a href="#" id="floatWa" class="float-wa" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 3.825 0 6.938 3.112 6.938 6.937 0 3.825-3.113 6.938-6.938 6.938z"/></svg>
+</a>
 
 <script>
-  // ⚠️ PASO A ACTIVAR: pon aquí tu número real, en formato internacional sin espacios ni signos +
-  // Ejemplo para México: "5217771234567" (52 + 1 + 10 dígitos del número)
-  const WHATSAPP_NUMBER = "527701859573"; // 52 (México) + 7701859573
+  const WHATSAPP_NUMBER = "527701859573"; 
   const PHONE_NUMBER = "+527701859573";
 
-  // ⚠️ PASO A ACTIVAR: pega aquí la URL de inserción de tu Google Form (lo que va dentro de src="...")
-  const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdiLg2k2jW26ue0bobJNYRI0I21FnNBBJ7F9RX7TesvjpRZHw/viewform?embedded=true";
-
   if (WHATSAPP_NUMBER) {
-    const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quisiera pedir información sobre un servicio.')}`;
+    const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Necesito asistencia técnica URGENTE.')}`;
     document.getElementById('btnWhatsapp').href = waLink;
-    document.getElementById('linkWhatsapp').href = waLink;
+    document.getElementById('floatWa').href = waLink;
+    
+    // Aplicar link a los botones de las tarjetas
+    document.querySelectorAll('.wa-link').forEach(btn => {
+        btn.href = waLink;
+    });
   }
   if (PHONE_NUMBER) {
     document.getElementById('btnLlamar').href = `tel:${PHONE_NUMBER}`;
-    document.getElementById('linkLlamar').href = `tel:${PHONE_NUMBER}`;
   }
-
-  const quoteForm = document.getElementById('quoteForm');
-  const formPending = document.getElementById('formPending');
-  if (FORM_URL.trim() !== "") {
-    quoteForm.src = FORM_URL;
-    quoteForm.style.display = "block";
-    formPending.style.display = "none";
-  } else {
-    quoteForm.style.display = "none";
-    formPending.style.display = "flex";
-  }
-
-  const navToggle = document.getElementById('navToggle');
-  const topnav = document.getElementById('topnav');
-  if (navToggle) navToggle.addEventListener('click', () => topnav.classList.toggle('open'));
 </script>
 </body>
 </html>
